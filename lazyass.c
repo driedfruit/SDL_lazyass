@@ -1,5 +1,5 @@
 #include "lazyass.h"
-#include "hash.h"
+#include "hash/hash.h"
 
 static hash_t textures;
 static hash_t surfaces;
