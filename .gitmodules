@@ -1,0 +1,3 @@
+[submodule "hash"]
+	path = hash
+	url = git://github.com/driedfruit/hashtrie.git
