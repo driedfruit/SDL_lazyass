@@ -12,7 +12,7 @@ SDL_Renderer *use
 ) {
 	use_renderer = use;
 	hash_init(&textures, 128);
-	//hash_init(&surfaces, 45);
+	hash_init(&surfaces, 128);
 	hash_init(&sounds, 128);
 }
 
@@ -37,13 +37,14 @@ void hash_release_sounds(hash_t *tree) {
 	if (tree->tab)
 		for (i = 0; i < tree->span; i++)
 			hash_release_sounds((hash_t*)(tree->tab + i));
+	//TODO: cleanup something
 }
 
 void ASS_Quit() {
     hash_release_textures(&textures);
-    //hash_release_surfaces(&surfaces);
+    hash_release_surfaces(&surfaces);
     hash_done(&textures);
-    //hash_done(&surfaces);
+    hash_done(&surfaces);
     hash_done(&sounds);
 }
 
