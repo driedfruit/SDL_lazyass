@@ -66,7 +66,7 @@ SDL_Surface *ASS_LoadSurface(const char *filename) {
 	return ret;
 }
 
-void ASS_FreeSurface(const char *filename) {
+void ASS_FreeSurface(SDL_Surface *surface) {
 
 }
 
@@ -120,6 +120,6 @@ SDL_Texture *ASS_LoadTexture(const char *filename, SDL_Color *colorkey) {
 	return ret;
 }
 
-void ASS_FreeTexture(const char *filename) {
+void ASS_FreeTexture(SDL_Texture *texture) {
 
 }

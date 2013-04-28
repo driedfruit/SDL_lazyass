@@ -24,10 +24,10 @@ SDL_Renderer *use
 extern void ASS_Quit();
 
 extern SDL_Texture *ASS_LoadTexture(const char *filename, SDL_Color *colorkey);
-extern void ASS_FreeTexture(const char *filename);
+extern void ASS_FreeTexture(SDL_Texture *texture);
 
 extern SDL_Surface *ASS_LoadSurface(const char *filename);
-extern void ASS_FreeSurface(const char *filename);
+extern void ASS_FreeSurface(SDL_Surface *surface);
 
 extern ASS_Sound *ASS_LoadSound(const char *filename);
 extern void ASS_FreeSound(ASS_Sound *wav);
