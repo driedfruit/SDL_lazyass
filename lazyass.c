@@ -48,6 +48,14 @@ void ASS_Quit() {
     hash_done(&sounds);
 }
 
+ASS_Sound *ASS_LoadSound(const char *filename) {
+	return NULL;
+}
+
+void ASS_FreeSound(ASS_Sound *sound) {
+
+}
+
 SDL_Surface *ASS_LoadSurface(const char *filename) {
 	SDL_Surface *ret = NULL;
 
