@@ -287,11 +287,11 @@ void ASS_Quit() {
 	queue.work = 0;
 	SDL_WaitThread(loader_thread, NULL);
 	SDL_DestroyMutex(queue_mutex);
-    hash_release_textures(&textures);
-    hash_release_surfaces(&surfaces);
-    hash_done(&textures);
-    hash_done(&surfaces);
-    hash_done(&sounds);
+	hash_release_textures(&textures);
+	hash_release_surfaces(&surfaces);
+	hash_done(&textures);
+	hash_done(&surfaces);
+	hash_done(&sounds);
 }
 
 ASS_Sound *ASS_LoadSound(const char *filename) {
