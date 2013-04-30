@@ -158,14 +158,12 @@ Uint32 ASS_GetProgress(Uint64 *write_left, Uint64 *write_total) {
 	queue.bytes_total = 0;
 	queue.files_left = 0;
 
-	int i = 0;
 	while (item) {
 		if (item->ops) item->bytes_read = SDL_RWtell(item->ops);
 		queue.files_left += 1;
 		queue.bytes_total += item->bytes_total;
 		queue.bytes_left += (item->bytes_total - item->bytes_read);
 		item = item->next;
-		i++;
 	}
 
 	if (write_total != NULL) {
@@ -310,7 +308,6 @@ ASS_Sound *ASS_LoadSound(const char *filename) {
 	return ret;
 }
 int ASS_LoadSoundTO(ASS_Sound **dst, const char *filename) {
-	ASS_Sound *ret = NULL;
 	queue_item_t *item = NULL;
 	/* queue it */
 	item = queue_push(filename, ASStype_SOUND, NULL, (void**)dst);
@@ -322,7 +319,6 @@ ASS_Sound *ASS_LoadSound_RW(SDL_RWops *ops) {
 #ifdef HAVE_SDLIMAGE
 	ret = MIX_Load_RW(ops, 0);
 #else
-	SDL_AudioSpec *spec;
 	ret = malloc(sizeof(ASS_Sound));
 	if (ret == NULL) return NULL;
 	ret->last_sample = 0;
@@ -361,7 +357,6 @@ SDL_Surface *ASS_LoadSurface(const char *filename) {
 	return ret;
 }
 int ASS_LoadSurfaceTO(SDL_Surface **dst, const char *filename) {
-	SDL_Surface *ret = NULL;
 	queue_item_t *item = NULL;
 	/* queue it */
 	item = queue_push(filename, ASStype_SURFACE, NULL, (void**)dst);
@@ -404,7 +399,6 @@ SDL_Texture *ASS_LoadTexture(const char *filename, SDL_Color *colorkey) {
 	return ret;
 }
 int ASS_LoadTextureTO(SDL_Texture **dst, const char *filename, SDL_Color *colorkey) {
-	SDL_Texture *ret = NULL;
 	queue_item_t *item = NULL;
 	/* queue it */
 	item = queue_push(filename, ASStype_TEXTURE, (void*)colorkey, (void**)dst);
