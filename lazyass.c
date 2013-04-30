@@ -25,7 +25,7 @@ struct queue_item_t {
 		SDL_Texture *texture;
 		SDL_Surface *surface;
 		ASS_Sound *sound;
-	};
+	} r;
 	void **setto;
 	char *filename;
 	SDL_RWops *ops;
@@ -105,9 +105,9 @@ queue_item_t* queue_item(const char *filename, int type, void* param, void** dst
 		} else {
 			item->userdata = param;
 			item->type = type;
-			item->texture = NULL;
-			item->surface = NULL;
-			item->sound = NULL;
+			item->r.texture = NULL;
+			item->r.surface = NULL;
+			item->r.sound = NULL;
 			item->bytes_total = SDL_RWsize(item->ops);
 			item->bytes_read = 0;
 			item->next = NULL;
@@ -184,35 +184,35 @@ Uint32 ASS_GetProgress(Uint64 *write_left, Uint64 *write_total) {
 void ASS_LoadOne(queue_item_t *item) {
 	switch (item->type) {
 		case ASStype_SOUND:
-			item->sound = hash_get(&sounds, item->filename);
-			if (item->sound == NULL) {
-				item->sound = ASS_LoadSound_RW(item->ops);
-				if (item->sound != NULL) {
-					hash_set(&sounds, item->filename, item->sound);
+			item->r.sound = hash_get(&sounds, item->filename);
+			if (item->r.sound == NULL) {
+				item->r.sound = ASS_LoadSound_RW(item->ops);
+				if (item->r.sound != NULL) {
+					hash_set(&sounds, item->filename, item->r.sound);
 				}
 			}
-			*item->setto = (void*)item->sound;
+			*item->setto = (void*)item->r.sound;
 		break;
 		case ASStype_SURFACE:
-			item->surface = hash_get(&surfaces, item->filename);
-			if (item->surface == NULL) {
-				item->surface = ASS_LoadSurface_RW(item->ops);
-				if (item->surface != NULL) {
-					hash_set(&surfaces, item->filename, item->surface);
+			item->r.surface = hash_get(&surfaces, item->filename);
+			if (item->r.surface == NULL) {
+				item->r.surface = ASS_LoadSurface_RW(item->ops);
+				if (item->r.surface != NULL) {
+					hash_set(&surfaces, item->filename, item->r.surface);
 				}
 			}
-			*item->setto = (void*)item->surface;			
+			*item->setto = (void*)item->r.surface;
 		break;
 		case ASStype_TEXTURE:
 		default:
-			item->texture = hash_get(&textures, item->filename);
-			if (item->surface == NULL) {
-				item->texture = ASS_LoadTexture_RW(item->ops, item->userdata);
-				if (item->texture != NULL) {
-					hash_set(&textures, item->filename, item->texture);
+			item->r.texture = hash_get(&textures, item->filename);
+			if (item->r.surface == NULL) {
+				item->r.texture = ASS_LoadTexture_RW(item->ops, item->userdata);
+				if (item->r.texture != NULL) {
+					hash_set(&textures, item->filename, item->r.texture);
 				}
 			}
-			*item->setto = (void*)item->texture;
+			*item->setto = (void*)item->r.texture;
 		break;
 	}
 }
