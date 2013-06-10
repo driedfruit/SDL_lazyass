@@ -100,6 +100,7 @@ queue_item_t* queue_item(const char *filename, int type, void* param, void** dst
 		item->ops = SDL_RWFromFile(filename, "rb");
 		item->filename = strdup(filename);
 		if (item->ops == NULL || item->filename == NULL) {
+			fprintf(stderr, "Unable to open file `%s`: %s\n", filename, SDL_GetError());
 			queue_free_item(item);
 			item = NULL;
 		} else {
@@ -189,7 +190,7 @@ void ASS_LoadOne(queue_item_t *item) {
 				item->r.sound = ASS_LoadSound_RW(item->ops);
 				if (item->r.sound != NULL) {
 					hash_set(&sounds, item->filename, item->r.sound);
-				}
+				} else fprintf(stderr, "Failed to load `%s`\n", item->filename);
 			}
 			*item->setto = (void*)item->r.sound;
 		break;
@@ -199,7 +200,7 @@ void ASS_LoadOne(queue_item_t *item) {
 				item->r.surface = ASS_LoadSurface_RW(item->ops);
 				if (item->r.surface != NULL) {
 					hash_set(&surfaces, item->filename, item->r.surface);
-				}
+				} else fprintf(stderr, "Failed to load `%s`\n", item->filename);
 			}
 			*item->setto = (void*)item->r.surface;
 		break;
@@ -210,7 +211,7 @@ void ASS_LoadOne(queue_item_t *item) {
 				item->r.texture = ASS_LoadTexture_RW(item->ops, item->userdata);
 				if (item->r.texture != NULL) {
 					hash_set(&textures, item->filename, item->r.texture);
-				}
+				} else fprintf(stderr, "Failed to load `%s`\n", item->filename);
 			}
 			*item->setto = (void*)item->r.texture;
 		break;
