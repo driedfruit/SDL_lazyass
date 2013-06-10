@@ -372,8 +372,14 @@ SDL_Surface *ASS_LoadSurface_RW(SDL_RWops *ops) {
 
 #ifdef HAVE_SDLIMAGE
 	ret = IMG_Load_RW(ops, 0);
+	if (ret == NULL) {
+		fprintf(stderr, "Could not read: %s\n", IMG_GetError());
+	}
 #else
 	ret = SDL_LoadBMP_RW(ops, 0);
+	if (ret == NULL) {
+		fprintf(stderr, "Could not read: %s\n", SDL_GetError());
+	}
 #endif
 
 	return ret;
@@ -415,11 +421,16 @@ SDL_Texture *ASS_LoadTexture_RW(SDL_RWops *ops, SDL_Color *colorkey) {
 	SDL_Surface *tmp32 = NULL;
 	int i;
 
-	if (ret == NULL) {
 #ifdef HAVE_SDLIMAGE
-		tmp = IMG_Load_RW(ops, 0);
+	tmp = IMG_Load_RW(ops, 0);
+	if (ret == NULL) {
+		fprintf(stderr, "Could not read: %s\n", IMG_GetError());
+	}
 #else
-		tmp = SDL_LoadBMP_RW(ops, 0);
+	tmp = SDL_LoadBMP_RW(ops, 0);
+	if (tmp == NULL) {
+		fprintf(stderr, "Could not read: %s\n", SDL_GetError());
+	}
 #endif
 	if (tmp == NULL) return NULL; /* error */
 
