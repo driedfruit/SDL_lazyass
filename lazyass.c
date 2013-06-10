@@ -452,15 +452,15 @@ SDL_Texture *ASS_LoadTexture_RW(SDL_RWops *ops, SDL_Color *colorkey) {
 		SDL_SetColorKey(tmp, SDL_TRUE, SDL_MapRGB(tmp->format, colorkey->r, colorkey->g, colorkey->b));
 		for (i = 0; i < tmp->format->palette->ncolors; i++)
 			tmp->format->palette->colors[i].a = 0xFF;
-			SDL_BlitSurface(tmp, NULL, tmp32, NULL);
-		} else {
-			tmp32 = tmp;
-		}
-		ret = SDL_CreateTextureFromSurface(use_renderer, tmp32);
-
-		if (tmp32 != tmp) SDL_FreeSurface(tmp32); 
-		SDL_FreeSurface(tmp);
+		SDL_BlitSurface(tmp, NULL, tmp32, NULL);
+	} else {
+		tmp32 = tmp;
 	}
+	ret = SDL_CreateTextureFromSurface(use_renderer, tmp32);
+
+	if (tmp32 != tmp) SDL_FreeSurface(tmp32); 
+	SDL_FreeSurface(tmp);
+
 	return ret;
 }
 void ASS_FreeTexture(SDL_Texture *texture) {
