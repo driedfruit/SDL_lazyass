@@ -317,8 +317,11 @@ int ASS_LoadSoundTO(ASS_Sound **dst, const char *filename) {
 }
 ASS_Sound *ASS_LoadSound_RW(SDL_RWops *ops) {
 	ASS_Sound *ret;
-#ifdef HAVE_SDLIMAGE
-	ret = MIX_Load_RW(ops, 0);
+#ifdef HAVE_SDLMIXER
+	ret = Mix_LoadWAV_RW(ops, 0);
+	if (ret == NULL) {
+		fprintf(stderr, "Could not read: %s\n", Mix_GetError());
+	}
 #else
 	ret = malloc(sizeof(ASS_Sound));
 	if (ret == NULL) return NULL;

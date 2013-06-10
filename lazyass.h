@@ -5,7 +5,8 @@
 #include <SDL.h>
 
 #ifdef HAVE_SDLMIXER
-typedef MIX_WaveChunk ASS_Sound
+#include <SDL2/SDL_mixer.h>
+typedef Mix_Chunk ASS_Sound;
 #else
 typedef struct ASS_Sound {
 
